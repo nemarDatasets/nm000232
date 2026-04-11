@@ -1,0 +1,17 @@
+{
+  "Name": "THINGS-EEG2 preprocessed resting-state EEG (Gifford et al. 2022)",
+  "BIDSVersion": "1.9.0",
+  "DatasetType": "derivative",
+  "GeneratedBy": [
+    {
+      "Name": "Gifford et al. 2022 resting-state pipeline",
+      "Description": "Author-released preprocessed resting-state EEG as distributed on OSF (https://osf.io/6sg5e/).",
+      "CodeURL": "https://github.com/gifale95/eeg_encoding"
+    }
+  ],
+  "SourceDatasets": [
+    {
+      "URL": "https://osf.io/6sg5e/"
+    }
+  ]
+}

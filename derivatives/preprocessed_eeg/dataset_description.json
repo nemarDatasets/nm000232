@@ -1,0 +1,17 @@
+{
+  "Name": "THINGS-EEG2 preprocessed EEG (Gifford et al. 2022)",
+  "BIDSVersion": "1.9.0",
+  "DatasetType": "derivative",
+  "GeneratedBy": [
+    {
+      "Name": "Gifford et al. 2022 preprocessing pipeline",
+      "Description": "Author-released preprocessed train/test epochs as distributed on OSF (https://osf.io/anp5v/). The 64-channel version. Stored as one zip per subject.",
+      "CodeURL": "https://github.com/gifale95/eeg_encoding"
+    }
+  ],
+  "SourceDatasets": [
+    {
+      "URL": "https://osf.io/anp5v/"
+    }
+  ]
+}

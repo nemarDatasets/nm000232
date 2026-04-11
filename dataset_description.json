@@ -1,0 +1,38 @@
+{
+  "Name": "THINGS-EEG2: A large and rich EEG dataset for modeling human visual object recognition",
+  "BIDSVersion": "1.9.0",
+  "DatasetType": "raw",
+  "License": "CC-BY 4.0",
+  "Authors": [
+    "Alessandro T. Gifford",
+    "Kshitij Dwivedi",
+    "Gemma Roig",
+    "Radoslaw M. Cichy"
+  ],
+  "Acknowledgements": "We thank all 10 participants and the Cichy and Roig labs at Freie Universit\u00e4t Berlin and Goethe University Frankfurt.",
+  "HowToAcknowledge": "Please cite: Gifford, A.T., Dwivedi, K., Roig, G., & Cichy, R.M. (2022). A large and rich EEG dataset for modeling human visual object recognition. NeuroImage, 264, 119754. https://doi.org/10.1016/j.neuroimage.2022.119754",
+  "Funding": [
+    "German Research Council (DFG) grants CI 241/1-1, CI 241/3-1, CI 241/1-7",
+    "European Research Council (ERC) Starting Grant ERC-2018-StG 803370",
+    "Hessian Ministry of Higher Education, Research, Science and the Arts (HMWK)"
+  ],
+  "DatasetDOI": "doi:10.17605/OSF.IO/3JK45",
+  "ReferencesAndLinks": [
+    "https://osf.io/3jk45/",
+    "https://doi.org/10.1016/j.neuroimage.2022.119754",
+    "https://github.com/gifale95/eeg_encoding"
+  ],
+  "SourceDatasets": [
+    {
+      "URL": "https://osf.io/3jk45/"
+    }
+  ],
+  "GeneratedBy": [
+    {
+      "Name": "convert_thingseeg2.py (EEGDash)",
+      "Description": "Converted from the THINGS-EEG2 Source EEG component (original BrainVision files + behavioural .mat) to BIDS-EEG. Source files preserved in /sourcedata/. Authors' preprocessed data preserved in /derivatives/preprocessed_eeg/ and /derivatives/resting_state/. Image stimuli stored in /stimuli/.",
+      "CodeURL": "https://github.com/bruaristimunha/EEGDash"
+    }
+  ],
+  "HEDVersion": "8.2.0"
+}

@@ -1,0 +1,42 @@
+{
+  "TaskName": "train",
+  "Manufacturer": "Brain Products",
+  "PowerLineFrequency": 50,
+  "SamplingFrequency": 1000.0,
+  "SoftwareFilters": "n/a",
+  "RecordingDuration": 1065.439,
+  "RecordingType": "continuous",
+  "EEGReference": "FCz (online); offline re-referenced as needed",
+  "EEGGround": "AFz",
+  "EEGPlacementScheme": "International 10-10",
+  "EEGChannelCount": 63,
+  "EOGChannelCount": 0,
+  "ECGChannelCount": 0,
+  "EMGChannelCount": 0,
+  "MiscChannelCount": 0,
+  "TriggerChannelCount": 0,
+  "MISCChannelCount": 0,
+  "TaskDescription": "Rapid serial visual presentation (RSVP) of training images from the THINGS database. Each image was shown for 100 ms followed by 100 ms blank (200 ms SOA, 5 Hz). Subjects were instructed to maintain fixation and to press a button on random catch (target) trials.",
+  "Instructions": "Maintain central fixation. On training/test runs, press the button as quickly as possible whenever a catch (target) image appears.",
+  "InstitutionName": "Freie Universit\u00e4t Berlin",
+  "InstitutionAddress": "Habelschwerdter Allee 45, 14195 Berlin, Germany",
+  "InstitutionalDepartmentName": "Department of Education and Psychology, Neural Dynamics of Visual Cognition Lab (Cichy lab)",
+  "ManufacturersModelName": "BrainVision actiCHamp",
+  "CapManufacturer": "EasyCap",
+  "CapManufacturersModelName": "actiCAP 64Ch Standard-2",
+  "HardwareFilters": {
+    "Highpass": {
+      "CutoffFrequency": 0.01,
+      "Unit": "Hz"
+    },
+    "Lowpass": {
+      "CutoffFrequency": 100,
+      "Unit": "Hz"
+    }
+  },
+  "SoftwareVersions": "n/a",
+  "DeviceSerialNumber": "n/a",
+  "SubjectArtefactDescription": "n/a",
+  "CogAtlasID": "n/a",
+  "CogPOID": "n/a"
+}

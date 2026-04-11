@@ -1,0 +1,30 @@
+LICENSE
+
+The THINGS database consists of (1) a list of nouns, (2) object images, (3) collected annotations to the nouns (e.g. high-level categories), (4) collected annotations to the images (e.g. image naming), (5) synset vectors, and (6) similarity matrices derived from feeding all images through a deep convolutional neural network. The database is described in detail in our paper:
+
+Hebart, M.N., Dickter, A.H., Kidder, A., Kwok, W.Y., Corriveau, A., Van Wicklin, C., & Baker, C.I. (2019). THINGS: A database of 1,854 object concepts and more than 26,000 naturalistic object images. bioRxiv 545954.
+https://doi.org/10.1101/545954
+
+Unless noted otherwise below, all materials can be used under the Creative Commons License (Attribution CC BY 2.0). You can use, redistribute, and adapt it for non-commercial purposes, as long as you (a) give appropriate credit by citing our paper, (b) indicate any changes that you have made, and
+(c) distribute any derivative works under the same license. A copy of the license is available at https://creativecommons.org/licenses/by/2.0/
+
+--Nouns and concreteness ratings--
+The nouns and concreteness ratings used in the creation of this database were taken from
+“Brysbaert, M., Warriner, A.B., & Kuperman, V. (2014). Concreteness ratings for 40 thousand generally known English word lemmas. Behavior Research Methods, 46, 904-911.”
+The list is available here: http://crr.ugent.be/archives/1330
+
+--Object images--
+The copyright of all images belongs to the owners of the image and are made available for research purposes only, according to fair use. Commercial use, reproduction or distribution of the images, or any modifications thereof, is not permitted without the explicit consent of the owners.
+
+--COCA word frequency --
+Nouns published alongside the THINGS database come with word frequency data from the Corpus of Contemporary American English (COCA). Modified word frequency data is published with permission of Mark Davies (https://www.wordfrequency.info). 
+
+--Synset vectors--
+The synset vectors are based on the research paper "Pilehvar, M.T. & Collier, N. (2016). De-conflated semantic representations. EMNLP 2016, Austin, TX.” and are available here:
+http://pilehvar.github.io/deconf/
+They are based on word2vec (https://code.google.com/archive/p/word2vec), which is published under the Apache License, Version 2.0. You may not use these vectors except in compliance with this license, a copy of which is available at http://www.apache.org/licenses/LICENSE-2.0.
+
+--Object image similarity matrices--
+Object similarity matrices were derived by feeding all object images through the deep convolutional neural network CorNet and computing the Pearson correlation similarity matrix of all images for each layer of the network separately. The network is described in "Kubilius, J., Schrimpf, M., Nayebi, A., Bear, D., Yamins, D.L.K., & DiCarlo, J.J. (2018). CORnet: Modeling the neural mechanisms of core object recognition. bioRxiv https://doi.org/10.1101/408385"
+The code for the network is licensed under the GNU General Public License v3.0 and is available here: https://github.com/dicarlolab/CORnet
+

@@ -1,0 +1,19 @@
+{
+  "participant_id": {
+    "Description": "Unique participant identifier (sub-XX)"
+  },
+  "age": {
+    "Description": "Age of the participant at time of testing",
+    "Units": "years"
+  },
+  "sex": {
+    "Description": "Biological sex",
+    "Levels": {
+      "M": "Male",
+      "F": "Female"
+    }
+  },
+  "n_sessions": {
+    "Description": "Number of EEG sessions completed"
+  }
+}

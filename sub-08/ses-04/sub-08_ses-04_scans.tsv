@@ -1,0 +1,9 @@
+﻿filename	acq_time
+eeg/sub-08_ses-04_task-rest_run-01_eeg.bdf	2021-05-08T15:44:29.521709Z
+eeg/sub-08_ses-04_task-rest_run-02_eeg.bdf	2021-05-08T17:59:46.777850Z
+eeg/sub-08_ses-04_task-test_eeg.bdf	2021-05-08T15:51:16.092504Z
+eeg/sub-08_ses-04_task-train_run-01_eeg.bdf	2021-05-08T16:18:24.047105Z
+eeg/sub-08_ses-04_task-train_run-02_eeg.bdf	2021-05-08T16:39:29.524107Z
+eeg/sub-08_ses-04_task-train_run-03_eeg.bdf	2021-05-08T16:59:10.899979Z
+eeg/sub-08_ses-04_task-train_run-04_eeg.bdf	2021-05-08T17:19:52.456659Z
+eeg/sub-08_ses-04_task-train_run-05_eeg.bdf	2021-05-08T17:40:09.493010Z

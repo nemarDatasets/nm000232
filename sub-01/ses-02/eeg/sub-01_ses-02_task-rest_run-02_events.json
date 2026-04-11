@@ -1,0 +1,51 @@
+{
+  "onset": {
+    "Description": "Event onset in seconds",
+    "Units": "s"
+  },
+  "duration": {
+    "Description": "Event duration in seconds",
+    "Units": "s"
+  },
+  "sample": {
+    "Description": "Sample index of the event onset (0-based)"
+  },
+  "value": {
+    "Description": "Trigger code from the BrainVision recording (1-99 cycle, does NOT uniquely identify the image)"
+  },
+  "trial_type": {
+    "Description": "Trial category",
+    "Levels": {
+      "image": "Standard image presentation (training or test stimulus)",
+      "target": "Random catch trial requiring a button press",
+      "rest_marker": "Resting state start/end marker"
+    }
+  },
+  "tot_img_number": {
+    "Description": "Global image ID from the THINGS-EEG2 stimulus set (1-16540 for train; 1-200 for test). 'n/a' on target trials."
+  },
+  "img_category": {
+    "Description": "Numeric category index from THINGS database"
+  },
+  "category_name": {
+    "Description": "THINGS category label, e.g. '01175_roller_coaster'"
+  },
+  "block": {
+    "Description": "Block index within this run"
+  },
+  "sequence": {
+    "Description": "Sequence index within the block"
+  },
+  "img_in_sequence": {
+    "Description": "Position of this image within its 20-image sequence"
+  },
+  "soa": {
+    "Description": "Stimulus onset asynchrony as actually measured",
+    "Units": "s"
+  },
+  "StimulusPresentation": {
+    "OperatingSystem": "n/a",
+    "SoftwareName": "Psychtoolbox-3",
+    "SoftwareVersion": "n/a"
+  }
+}
