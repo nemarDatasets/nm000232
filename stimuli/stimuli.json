@@ -1,0 +1,36 @@
+{
+  "stimulus_id": {
+    "Description": "Unique identifier for a specific stimulus. Maps to events.tsv \"tot_img_number\": for \"stim-trainNNNNN\" or \"stim-testNNN\", strip the prefix and remove leading zeros to recover the 1-based image index used in events.tsv."
+  },
+  "type": {
+    "Description": "Stimulus modality. Refers to the BIDS suffix of the stimulus file.",
+    "Levels": {
+      "image": "A static visual stimulus (jpg)."
+    }
+  },
+  "license": {
+    "Description": "License of the stimulus file. Set to \"n/a\" because individual THINGS images are released under fair-use, research-only terms (see stimuli/LICENSE.txt)."
+  },
+  "copyright": {
+    "Description": "Copyright holder. THINGS images belong to their original owners; published in Hebart et al. 2019."
+  },
+  "description": {
+    "Description": "Free-form description; encodes the original concept directory and original filename for traceability."
+  },
+  "URL": {
+    "Description": "Project URL for the THINGS initiative."
+  },
+  "filename": {
+    "Description": "Path to the stimulus file relative to the stimuli/ directory."
+  },
+  "present": {
+    "Description": "Whether the file is bundled with the dataset.",
+    "Levels": {
+      "true": "File is present.",
+      "false": "File is not present."
+    }
+  },
+  "BEP044Adherence": {
+    "Description": "This dataset follows BEP044 (BIDS-stim) as proposed in https://github.com/bids-standard/bids-specification/pull/2022. events.tsv currently uses tot_img_number rather than the spec-suggested stim_id column; tot_img_number maps to stimulus_id by the convention encoded above."
+  }
+}

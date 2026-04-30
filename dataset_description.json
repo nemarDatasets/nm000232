@@ -1,6 +1,7 @@
 {
   "Name": "THINGS-EEG2: A large and rich EEG dataset for modeling human visual object recognition",
   "BIDSVersion": "1.9.0",
+  "Version": "1.0.1",
   "DatasetType": "raw",
   "License": "CC-BY 4.0",
   "Authors": [
@@ -9,7 +10,7 @@
     "Gemma Roig",
     "Radoslaw M. Cichy"
   ],
-  "Acknowledgements": "We thank all 10 participants and the Cichy and Roig labs at Freie Universit\u00e4t Berlin and Goethe University Frankfurt.",
+  "Acknowledgements": "We thank all 10 participants and the Cichy and Roig labs at Freie Universität Berlin and Goethe University Frankfurt.",
   "HowToAcknowledge": "Please cite: Gifford, A.T., Dwivedi, K., Roig, G., & Cichy, R.M. (2022). A large and rich EEG dataset for modeling human visual object recognition. NeuroImage, 264, 119754. https://doi.org/10.1016/j.neuroimage.2022.119754",
   "Funding": [
     "German Research Council (DFG) grants CI 241/1-1, CI 241/3-1, CI 241/1-7",
