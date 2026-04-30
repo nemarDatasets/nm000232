@@ -1,0 +1,37 @@
+name: Version Check
+
+on:
+  pull_request:
+    branches: [main]
+
+jobs:
+  check-version:
+    name: version-check
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Check version bump
+        run: |
+          # Get version from PR branch
+          PR_VERSION=$(jq -r '.Version // "0.0.0"' dataset_description.json)
+
+          # Get version from main branch
+          git fetch origin main
+          git checkout origin/main -- dataset_description.json 2>/dev/null || echo '{}' > dataset_description.json
+          MAIN_VERSION=$(jq -r '.Version // "0.0.0"' dataset_description.json)
+
+          # Restore PR version
+          git checkout HEAD -- dataset_description.json
+
+          echo "Main version: $MAIN_VERSION"
+          echo "PR version: $PR_VERSION"
+
+          if [ "$PR_VERSION" == "$MAIN_VERSION" ]; then
+            echo "::error::Version not bumped. Update 'Version' field in dataset_description.json"
+            exit 1
+          fi
+
+          echo "Version check passed: $MAIN_VERSION -> $PR_VERSION"

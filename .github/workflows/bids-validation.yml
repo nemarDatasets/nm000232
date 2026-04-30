@@ -1,0 +1,69 @@
+name: BIDS Validation
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  validate:
+    name: bids-validation
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Deno
+        uses: denoland/setup-deno@v2
+        with:
+          deno-version: v2.x
+
+      - name: Run BIDS validator
+        run: |
+          mkdir -p .nemar
+          grep -qxF '.nemar/' .bidsignore 2>/dev/null || echo '.nemar/' >> .bidsignore
+          deno run -A jsr:@bids/validator . --json > .nemar/validation.json || true
+          cat .nemar/validation.json
+
+      - name: Collect git-annex pointer files
+        run: |
+          # Find symlinks (annex pointers in locked repos)
+          find . -type l -not -path './.git/*' -printf '/%P\n' > /tmp/annex-files.txt 2>/dev/null || true
+          # Find small files with annex pointer content (unlocked repos)
+          find . -type f -not -path './.git/*' -size -1k -exec grep -l '^/annex/objects/' {} + 2>/dev/null | sed 's|^\./|/|' >> /tmp/annex-files.txt || true
+          sort -u /tmp/annex-files.txt -o /tmp/annex-files.txt
+          ANNEX_COUNT=$(wc -l < /tmp/annex-files.txt | tr -d ' ')
+          if [ "$ANNEX_COUNT" -gt 0 ]; then
+            echo "Found $ANNEX_COUNT git-annex pointer file(s) (errors from these will be filtered)"
+          fi
+
+      - name: Check validation result
+        run: |
+          if [ ! -f .nemar/validation.json ] || ! jq empty .nemar/validation.json 2>/dev/null; then
+            echo "::error::BIDS validator failed to produce valid output"
+            exit 1
+          fi
+
+          # Convert annex file list to JSON array for jq filtering
+          if [ -s /tmp/annex-files.txt ]; then
+            jq -R -s 'split("\n") | map(select(length > 0))' /tmp/annex-files.txt > /tmp/annex-files.json
+          else
+            echo '[]' > /tmp/annex-files.json
+          fi
+
+          # Filter out errors from git-annex pointer files
+          REAL_ERRORS=$(jq --slurpfile annexed /tmp/annex-files.json             '[.issues.issues[] | select(.severity == "error") | select(.location as $loc | ($annexed[0] | index($loc)) | not)] | length'             .nemar/validation.json)
+          ANNEX_ERRORS=$(jq --slurpfile annexed /tmp/annex-files.json             '[.issues.issues[] | select(.severity == "error") | select(.location as $loc | ($annexed[0] | index($loc)) | . != null)] | length'             .nemar/validation.json)
+
+          if [ "$ANNEX_ERRORS" -gt 0 ]; then
+            echo "::notice::Skipped $ANNEX_ERRORS error(s) from git-annex pointer files (not real data)"
+          fi
+
+          if [ "$REAL_ERRORS" -gt 0 ]; then
+            echo "::error::BIDS validation found $REAL_ERRORS error(s)"
+            jq --slurpfile annexed /tmp/annex-files.json               '[.issues.issues[] | select(.severity == "error") | select(.location as $loc | ($annexed[0] | index($loc)) | not)][]'               .nemar/validation.json
+            exit 1
+          fi
+          WARNINGS=$(jq '[.issues.issues[] | select(.severity == "warning")] | length' .nemar/validation.json)
+          echo "BIDS validation passed ($WARNINGS warning(s), $ANNEX_ERRORS annex pointer error(s) skipped)"

@@ -1,0 +1,29 @@
+1.0.1 2026-04-30
+  - Added BEP044-compliant stimuli/ structure (BIDS-spec PR #2022):
+      * stimuli/stimuli.tsv (16,740 rows: 16,540 train + 200 test)
+        with columns stimulus_id, type, license, copyright, description,
+        URL, filename, present.
+      * stimuli/stimuli.json describing the columns above and the
+        events.tsv "tot_img_number" ↔ "stimulus_id" mapping convention.
+      * BIDS-named copies of every image at
+        stimuli/training_images/<concept>/stim-train<NNNNN>_image.jpg
+        stimuli/test_images/<concept>/stim-test<NNN>_image.jpg
+        deduplicated against the originals via git-annex (same SHA256E
+        key, no extra S3 storage).
+  - Added code/align_stimuli.py: StimulusAligner helper that resolves
+    events.tsv rows to stimulus image paths.
+  - Added code/build_stim_bids.py: idempotent script that produced the
+    BEP044 layout from the existing zips and image_metadata.npy.
+  - Added code/smoke_test_braindecode.py: end-to-end alignment proof
+    using braindecode.datasets.BIDSDataset and mne.Epochs.
+  - Added .github/workflows/bids-validation.yml and version-check.yml
+    so PRs against this dataset are gated by the BIDS validator and a
+    Version-bump check.
+  - Added Version field ("1.0.0" → "1.0.1") to dataset_description.json
+    (the field was previously absent).
+
+1.0.0 2026-04-11
+  - Initial release. Conversion of THINGS-EEG2 source EEG and
+    behavioural .mat files to BIDS-EEG; original BrainVision files
+    preserved under sourcedata/, authors' preprocessed data under
+    derivatives/, image stimuli under stimuli/.
