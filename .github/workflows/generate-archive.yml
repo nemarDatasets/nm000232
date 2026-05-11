@@ -1,0 +1,226 @@
+name: Generate Archive
+
+on:
+  repository_dispatch:
+    types: [generate-archive]
+
+jobs:
+  archive:
+    name: Generate Dataset Archive
+    runs-on: ubuntu-latest
+    env:
+      DATASET_ID: ${{ github.event.client_payload.dataset_id }}
+      VERSION: ${{ github.event.client_payload.version }}
+    steps:
+      - name: Validate inputs
+        run: |
+          if [ -z "$DATASET_ID" ]; then
+            echo "::error::Missing dataset_id in client_payload"
+            exit 1
+          fi
+          if [ -z "$VERSION" ]; then
+            echo "::error::Missing version in client_payload"
+            exit 1
+          fi
+
+      - uses: actions/checkout@v4
+        with:
+          ref: v${{ github.event.client_payload.version }}
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Install streaming dependencies
+        run: |
+          mkdir -p /tmp/archive-deps
+          cd /tmp/archive-deps
+          npm init -y > /dev/null
+          # Pin to v7: v8+ is ESM-only, require() no longer returns the factory.
+          npm install --no-save 'archiver@^7.0.1' @aws-sdk/client-s3 @aws-sdk/lib-storage
+
+      - name: Write archive script
+        run: |
+          cat > /tmp/stream-archive.js << 'ARCHIVE_SCRIPT'
+          var fs = require("fs");
+          var path = require("path");
+          var S3Client = require("@aws-sdk/client-s3").S3Client;
+          var Upload = require("@aws-sdk/lib-storage").Upload;
+          var archiver = require("archiver");
+          var PassThrough = require("stream").PassThrough;
+          var https = require("https");
+          var http = require("http");
+
+          var DATASET_ID = process.env.DATASET_ID;
+          var VERSION = process.env.VERSION;
+          var BUCKET = "nemar";
+          var REGION = process.env.AWS_DEFAULT_REGION || "us-east-2";
+          var S3_BASE = "https://" + BUCKET + ".s3." + REGION + ".amazonaws.com";
+
+          function resolveAnnexKey(filePath) {
+            try {
+              var stat = fs.lstatSync(filePath);
+              if (stat.isSymbolicLink()) {
+                var target = fs.readlinkSync(filePath);
+                var m = target.match(/([^\/]+)\/\1$/);
+                if (m) return m[1];
+                var m2 = target.match(/\/annex\/objects\/(.+)$/);
+                if (m2) return m2[1];
+              } else if (stat.isFile() && stat.size < 500 && stat.size > 20) {
+                var content = fs.readFileSync(filePath, "utf8").trim();
+                var m3 = content.match(/^\/annex\/objects\/(.+)$/);
+                if (m3) return m3[1];
+              }
+            } catch (e) {
+              console.warn("  resolveAnnexKey failed for " + filePath + ": " + e.message);
+            }
+            return null;
+          }
+
+          function fetchUrl(url) {
+            return new Promise(function (resolve, reject) {
+              var mod = url.indexOf("https") === 0 ? https : http;
+              mod
+                .get(url, function (res) {
+                  if (res.statusCode >= 300 && res.statusCode < 400 && res.headers.location) {
+                    fetchUrl(res.headers.location).then(resolve).catch(reject);
+                    return;
+                  }
+                  if (res.statusCode !== 200) {
+                    res.resume();
+                    reject(new Error("HTTP " + res.statusCode + " for " + url));
+                    return;
+                  }
+                  resolve(res);
+                })
+                .on("error", reject);
+            });
+          }
+
+          function walkDir(dir, base) {
+            base = base || "";
+            var result = [];
+            var entries = fs.readdirSync(dir, { withFileTypes: true });
+            for (var i = 0; i < entries.length; i++) {
+              var entry = entries[i];
+              if (entry.name === ".git" || entry.name === ".github" || entry.name === "node_modules") continue;
+              var rel = base ? base + "/" + entry.name : entry.name;
+              var full = path.join(dir, entry.name);
+              if (entry.isDirectory()) {
+                result = result.concat(walkDir(full, rel));
+              } else {
+                result.push({ rel: rel, full: full });
+              }
+            }
+            return result;
+          }
+
+          async function main() {
+            console.log("Streaming archive for " + DATASET_ID + " v" + VERSION);
+
+            var archive = archiver("zip", { zlib: { level: 1 } });
+            var passThrough = new PassThrough();
+            archive.pipe(passThrough);
+
+            archive.on("warning", function (err) {
+              console.warn("Archive warning:", err.message);
+            });
+            archive.on("error", function (err) {
+              console.error("Archive error:", err.message);
+              process.exitCode = 1;
+            });
+            passThrough.on("error", function (err) {
+              console.error("Stream error:", err.message);
+              process.exitCode = 1;
+            });
+
+            var s3 = new S3Client({ region: REGION });
+            var s3Key = DATASET_ID + "/archives/v" + VERSION + ".zip";
+
+            var upload = new Upload({
+              client: s3,
+              params: {
+                Bucket: BUCKET,
+                Key: s3Key,
+                Body: passThrough,
+                ContentType: "application/zip",
+              },
+              queueSize: 4,
+              partSize: 100 * 1024 * 1024,
+            });
+
+            var uploadDone = upload.done().catch(function (err) {
+              console.error("S3 Upload error:", err.message);
+              process.exitCode = 1;
+              throw err;
+            });
+
+            var files = walkDir(".");
+            console.log("Found " + files.length + " files");
+
+            var annexed = 0;
+            var regular = 0;
+            var skipped = 0;
+
+            for (var i = 0; i < files.length; i++) {
+              var rel = files[i].rel;
+              var full = files[i].full;
+              var annexKey = resolveAnnexKey(full);
+
+              try {
+                var entryDone = new Promise(function (resolve, reject) {
+                  archive.once("entry", resolve);
+                  archive.once("error", reject);
+                });
+                if (annexKey) {
+                  var url = S3_BASE + "/" + DATASET_ID + "/objects/" + encodeURIComponent(annexKey);
+                  var stream = await fetchUrl(url);
+                  archive.append(stream, { name: rel });
+                } else {
+                  archive.append(fs.createReadStream(full), { name: rel });
+                }
+                await entryDone;
+                if (annexKey) annexed++;
+                else regular++;
+              } catch (err) {
+                skipped++;
+                if (skipped <= 10) {
+                  console.warn("  Skipping " + rel + ": " + err.message);
+                } else if (skipped === 11) {
+                  console.warn("  (suppressing further skip warnings)");
+                }
+              }
+
+              if ((annexed + regular + skipped) % 100 === 0) {
+                console.log("  Progress: " + (annexed + regular + skipped) + "/" + files.length);
+              }
+            }
+
+            await archive.finalize();
+            await uploadDone;
+
+            console.log("Archive complete: " + annexed + " annexed + " + regular + " regular + " + skipped + " skipped");
+            console.log("Uploaded to s3://" + BUCKET + "/" + s3Key);
+            if (skipped > 0) {
+              console.warn("WARNING: " + skipped + " annexed files were not found in S3");
+            }
+          }
+
+          process.on("unhandledRejection", function (err) {
+            console.error("Unhandled rejection:", err);
+            process.exitCode = 1;
+          });
+
+          main().catch(function (err) {
+            console.error("Fatal:", err);
+            process.exitCode = 1;
+          });
+          ARCHIVE_SCRIPT
+
+      - name: Stream archive to S3
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          AWS_DEFAULT_REGION: us-east-2
+          NODE_PATH: /tmp/archive-deps/node_modules
+        run: node /tmp/stream-archive.js

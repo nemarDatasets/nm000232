@@ -1,0 +1,70 @@
+name: PR Merge Handler
+
+on:
+  pull_request_target:
+    types: [closed]
+    branches: [main]
+
+permissions:
+  contents: write
+
+jobs:
+  create-release:
+    name: Create Release
+    if: github.event.pull_request.merged == true
+    runs-on: ubuntu-latest
+    outputs:
+      version: ${{ steps.version.outputs.version }}
+      release_created: ${{ steps.create_release.outputs.created }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Get version
+        id: version
+        run: |
+          VERSION=$(jq -r '.Version // "1.0.0"' dataset_description.json)
+          echo "version=$VERSION" >> $GITHUB_OUTPUT
+          echo "Version: $VERSION"
+
+      - name: Check if tag exists
+        id: check_tag
+        run: |
+          if git rev-parse "v${{ steps.version.outputs.version }}" >/dev/null 2>&1; then
+            echo "exists=true" >> $GITHUB_OUTPUT
+          else
+            echo "exists=false" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Create tag and release
+        id: create_release
+        if: steps.check_tag.outputs.exists == 'false'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+        run: |
+          git config user.name "GitHub Actions"
+          git config user.email "actions@github.com"
+          VERSION="${{ steps.version.outputs.version }}"
+          git tag -a "v$VERSION" -m "Release v$VERSION"
+          git push origin "v$VERSION"
+          gh release create "v$VERSION" --title "v$VERSION" \
+            --notes "Release v$VERSION from PR #${PR_NUMBER}"
+          echo "created=true" >> $GITHUB_OUTPUT
+
+  cleanup-staging:
+    name: Cleanup Staging (runs on merge or close)
+    if: always()
+    runs-on: ubuntu-latest
+    steps:
+      - name: Remove staging data for this PR/branch
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          DATASET_ID: ${{ github.event.repository.name }}
+          BRANCH: ${{ github.event.pull_request.head.ref }}
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+        run: |
+          # Clean up branch-based staging
+          aws s3 rm --recursive "s3://nemar/staging/${DATASET_ID}/${BRANCH}/" 2>/dev/null || true
+          # Clean up legacy PR-number-based staging
+          aws s3 rm --recursive "s3://nemar/staging/pr-${PR_NUMBER}/" 2>/dev/null || true
