@@ -17,7 +17,7 @@
     "European Research Council (ERC) Starting Grant ERC-2018-StG 803370",
     "Hessian Ministry of Higher Education, Research, Science and the Arts (HMWK)"
   ],
-  "DatasetDOI": "doi:10.17605/OSF.IO/3JK45",
+  "DatasetDOI": "10.82901/nemar.nm000232",
   "ReferencesAndLinks": [
     "https://osf.io/3jk45/",
     "https://doi.org/10.1016/j.neuroimage.2022.119754",
@@ -26,6 +26,9 @@
   "SourceDatasets": [
     {
       "URL": "https://osf.io/3jk45/"
+    },
+    {
+      "DOI": "doi:10.17605/OSF.IO/3JK45"
     }
   ],
   "GeneratedBy": [
