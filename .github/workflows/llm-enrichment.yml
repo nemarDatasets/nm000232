@@ -17,12 +17,21 @@ jobs:
     permissions:
       contents: write
     steps:
+      - name: Mint App installation token
+        id: app-token
+        uses: actions/create-github-app-token@v1
+        with:
+          app-id: ${{ secrets.NEMAR_APP_ID }}
+          private-key: ${{ secrets.NEMAR_APP_PRIVATE_KEY }}
+          owner: nemarDatasets
+          repositories: ${{ github.event.repository.name }}
+
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
           fetch-depth: 1
           ref: ${{ github.ref_name }}
-          token: ${{ secrets.GITHUB_TOKEN }}
+          token: ${{ steps.app-token.outputs.token }}
 
       - name: Trigger enrichment and commit locally if asked
         env:
@@ -127,8 +136,8 @@ jobs:
 
           rm -f "$BODY_FILE"
 
-          git config user.name "nemar-bot"
-          git config user.email "actions@github.com"
+          git config user.name "nemar-publish-bot"
+          git config user.email "nemar-publish-bot@users.noreply.github.com"
           git add "$METADATA_PATH" .bidsignore
 
           if git diff --cached --quiet; then

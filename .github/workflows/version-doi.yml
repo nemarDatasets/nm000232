@@ -12,9 +12,18 @@ jobs:
     name: Publish Version DOI
     runs-on: ubuntu-latest
     steps:
+      - name: Mint App installation token
+        id: app-token
+        uses: actions/create-github-app-token@v1
+        with:
+          app-id: ${{ secrets.NEMAR_APP_ID }}
+          private-key: ${{ secrets.NEMAR_APP_PRIVATE_KEY }}
+          owner: nemarDatasets
+          repositories: ${{ github.event.repository.name }}
+
       - name: Create release if missing
         env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_TOKEN: ${{ steps.app-token.outputs.token }}
         run: |
           TAG="${{ github.ref_name }}"
           # Create release if it doesn't already exist (e.g., manual tag push)
@@ -122,9 +131,18 @@ jobs:
     needs: publish-doi
     runs-on: ubuntu-latest
     steps:
+      - name: Mint App installation token
+        id: app-token
+        uses: actions/create-github-app-token@v1
+        with:
+          app-id: ${{ secrets.NEMAR_APP_ID }}
+          private-key: ${{ secrets.NEMAR_APP_PRIVATE_KEY }}
+          owner: nemarDatasets
+          repositories: ${{ github.event.repository.name }}
+
       - name: Dispatch archive generation
         env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_TOKEN: ${{ steps.app-token.outputs.token }}
         run: |
           DATASET_ID="${{ github.event.repository.name }}"
           TAG="${{ github.ref_name }}"
