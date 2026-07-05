@@ -1,0 +1,106 @@
+{
+  "version": "2.0",
+  "pipeline_stage": "validated",
+  "authors": {
+    "Alessandro T. Gifford": {
+      "orcid": "0000-0002-8923-9477"
+    },
+    "Kshitij Dwivedi": {},
+    "Gemma Roig": {},
+    "Radoslaw M. Cichy": {}
+  },
+  "related_identifiers": [
+    {
+      "identifier": "10.17605/OSF.IO/3JK45",
+      "identifier_type": "DOI",
+      "relation_type": "IsDerivedFrom"
+    },
+    {
+      "identifier": "10.1016/j.neuroimage.2022.119754",
+      "identifier_type": "DOI",
+      "relation_type": "References"
+    },
+    {
+      "identifier": "https://github.com/nemarDatasets/nm000232",
+      "identifier_type": "URL",
+      "relation_type": "IsDescribedBy"
+    },
+    {
+      "identifier": "https://nemar.org/dataset/nm000232",
+      "identifier_type": "URL",
+      "relation_type": "IsDescribedBy"
+    }
+  ],
+  "funding_references": [
+    {
+      "funder_name": "Hessian Ministry of Higher Education, Research, Science and the Arts (HMWK)"
+    },
+    {
+      "funder_name": "German Research Council (DFG)",
+      "award_number": "CI 241/1-1"
+    },
+    {
+      "funder_name": "German Research Council (DFG)",
+      "award_number": "CI 241/3-1"
+    },
+    {
+      "funder_name": "German Research Council (DFG)",
+      "award_number": "CI 241/1-7"
+    },
+    {
+      "funder_name": "European Research Council (ERC)",
+      "award_number": "ERC-2018-StG 803370"
+    }
+  ],
+  "title": "THINGS-EEG2: A large and rich EEG dataset for modeling human visual object recognition",
+  "license": "CC-BY 4.0",
+  "dataset_type": "raw",
+  "resource_type_general": "Dataset",
+  "modalities": [
+    "eeg"
+  ],
+  "resource_type_specific": "EEG Dataset",
+  "sizes": [
+    "212.2 GB (1504 files)"
+  ],
+  "formats": [
+    ".bdf",
+    ".eeg",
+    ".extracted",
+    ".jpg",
+    ".json",
+    ".mat",
+    ".md",
+    ".npy",
+    ".py",
+    ".tsv",
+    ".txt",
+    ".vhdr",
+    ".vmrk",
+    ".yml",
+    ".zip"
+  ],
+  "description": "THINGS-EEG2 is a large-scale EEG dataset comprising recordings from 10 subjects viewing 16,540 distinct training images and 200 test images presented via rapid serial visual presentation at 5 Hz. The dataset includes 63-channel EEG data sampled at 1000 Hz across 4 sessions per subject, with approximately 32,540 training trials and 16,000 test trials, designed to support computational modeling of human visual object recognition. Stimuli are drawn from the THINGS database, and the dataset includes resting-state recordings and behavioral annotations for each trial.",
+  "methods_description": "EEG data were recorded using a Brain Products actiCHamp system with 63 channels in a 10-10 cap layout at 1000 Hz sampling rate with online band-pass filtering (0.01-100 Hz). Stimuli were presented via rapid serial visual presentation (RSVP) at 5 Hz. Each of 4 sessions contained 5 training runs (~3,360 trials each) of unique images, 1 test run (~4,080 trials) of 200 repeated images, and 2 resting-state runs (before and after the main task). Triggers were recorded as BrainVision stimulus annotations.",
+  "keywords": [
+    {
+      "term": "EEG"
+    },
+    {
+      "term": "visual object recognition"
+    },
+    {
+      "term": "rapid serial visual presentation"
+    },
+    {
+      "term": "neural encoding"
+    },
+    {
+      "term": "image classification"
+    },
+    {
+      "term": "human vision"
+    }
+  ],
+  "source_hash": "562a1589334324046776308484a5c086521536e9babd277e77c2b8f818ed3912"
+}
