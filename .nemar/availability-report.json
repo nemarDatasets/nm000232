@@ -1,0 +1,130 @@
+{
+  "dataset_id": "nm000232",
+  "version": "1.1.0",
+  "generated_at": "2026-07-23T01:08:51.361Z",
+  "source": null,
+  "complete": false,
+  "completeness": {
+    "files_present": 1461,
+    "files_declared": 1480,
+    "bytes_present": 212160209984,
+    "bytes_declared": 259280203401,
+    "pct_bytes": 0.8182661352508864
+  },
+  "missing": [
+    {
+      "path": "derivatives/preprocessed_eeg/sub-01__63_channels.zip",
+      "key": "SHA256E-s4034673327--d71a3a4ddd6b8219b4636491152293cb032249f7acbc1d7384705d0d4a35f44f.zip",
+      "declared_size": 4034673327,
+      "reason": "absent"
+    },
+    {
+      "path": "derivatives/preprocessed_eeg/sub-02__63_channels.zip",
+      "key": "SHA256E-s4036588917--c019e8b69ec0831d0cfde3f4cd0b13501547146834e207790cab6226b95d7e66.zip",
+      "declared_size": 4036588917,
+      "reason": "absent"
+    },
+    {
+      "path": "derivatives/preprocessed_eeg/sub-03__63_channels.zip",
+      "key": "SHA256E-s4034844567--fadffa5acaca01d9238f1f6b8c864df97b91b708af8a3043635cbe1b25fbd222.zip",
+      "declared_size": 4034844567,
+      "reason": "absent"
+    },
+    {
+      "path": "derivatives/preprocessed_eeg/sub-04__63_channels.zip",
+      "key": "SHA256E-s4035726020--c646452e3c83534c4f7b09afc75851555cbe7ace9cb4c060b3f796a5b4571ed5.zip",
+      "declared_size": 4035726020,
+      "reason": "absent"
+    },
+    {
+      "path": "derivatives/preprocessed_eeg/sub-05__63_channels.zip",
+      "key": "SHA256E-s4039314543--3b09d77f223a8dfd539b9034bc748d4d048e638bc12ebb87a61ba02501627c5e.zip",
+      "declared_size": 4039314543,
+      "reason": "absent"
+    },
+    {
+      "path": "derivatives/preprocessed_eeg/sub-06__63_channels.zip",
+      "key": "SHA256E-s4041755283--7ff37bc0663289918d09e849bf169df2245fa102db9e3dedc19f12cf5ad649a6.zip",
+      "declared_size": 4041755283,
+      "reason": "absent"
+    },
+    {
+      "path": "derivatives/preprocessed_eeg/sub-07__63_channels.zip",
+      "key": "SHA256E-s4034989037--ef1615a297eea4bbc9c32f926aa72742400d957b068938b63f7edec6fd0cc86e.zip",
+      "declared_size": 4034989037,
+      "reason": "absent"
+    },
+    {
+      "path": "derivatives/preprocessed_eeg/sub-08.zip",
+      "key": "SHA256E-s1071848309--8198700e52ae0cde35bde7cd8b7f574573e0d76040b65d50191e41a607f02b33.zip",
+      "declared_size": 1071848309,
+      "reason": "absent"
+    },
+    {
+      "path": "derivatives/preprocessed_eeg/sub-08__63_channels.zip",
+      "key": "SHA256E-s4037323395--46b0d5b910fdeae88774c67b975e7bfc93b41274b28bbd90f40df6d6a32373db.zip",
+      "declared_size": 4037323395,
+      "reason": "absent"
+    },
+    {
+      "path": "derivatives/preprocessed_eeg/sub-09__63_channels.zip",
+      "key": "SHA256E-s4033808769--f72084a426053f083ed829675a9d4092624b569a4cc977511287c81d62e0c26b.zip",
+      "declared_size": 4033808769,
+      "reason": "absent"
+    },
+    {
+      "path": "derivatives/preprocessed_eeg/sub-10__63_channels.zip",
+      "key": "SHA256E-s4036410872--d6af1bb5e03585b0c25d42098aacea71b69fdbf8cc132243755df38fe6787e73.zip",
+      "declared_size": 4036410872,
+      "reason": "absent"
+    },
+    {
+      "path": "sourcedata/sub-01.zip",
+      "key": "SHA256E-s5418407415--4801b9039e94f2616dfff154d081d8610e5a868bbc7d6bb564738bbb399ae8b2.zip",
+      "declared_size": 5418407415,
+      "reason": "absent"
+    },
+    {
+      "path": "sourcedata/sub-02.zip",
+      "key": "SHA256E-s6022565488--f38326090e98424cb9be4b1f595429c35de1878e1dd3903132fb74a3e7e13a65.zip",
+      "declared_size": 6022565488,
+      "reason": "absent"
+    },
+    {
+      "path": "sourcedata/sub-04.zip",
+      "key": "SHA256E-s6519078100--664845381cf7703bf17a8ad7a5f961c8d2efb5932f2da5e9a04a8daede12b1da.zip",
+      "declared_size": 6519078100,
+      "reason": "absent"
+    },
+    {
+      "path": "sourcedata/sub-05.zip",
+      "key": "SHA256E-s5908296079--65925d69a1df8c1a930936a2dce68fbd24e23246bf63854892d6a29716f6986b.zip",
+      "declared_size": 5908296079,
+      "reason": "absent"
+    },
+    {
+      "path": "sourcedata/sub-06.zip",
+      "key": "SHA256E-s5802854327--809f88e63eaaf4ce6526dc9452ce1cc8d460fd3de5c7162642f2f2dad1712ca6.zip",
+      "declared_size": 5802854327,
+      "reason": "absent"
+    },
+    {
+      "path": "sourcedata/sub-07.zip",
+      "key": "SHA256E-s5652917241--40c26d028962ca17a23d6bd9089a263ee6d55164b016cae298426d54f1d8c250.zip",
+      "declared_size": 5652917241,
+      "reason": "absent"
+    },
+    {
+      "path": "sourcedata/sub-08.zip",
+      "key": "SHA256E-s6252596808--63e316a04b0615018f86dd688144dfe45fabe4bcc16132903afdabc079e2dd76.zip",
+      "declared_size": 6252596808,
+      "reason": "absent"
+    },
+    {
+      "path": "sourcedata/sub-10.zip",
+      "key": "SHA256E-s6499125373--f4d8776e683379d1b96287d89a71fc62b759bb3a0fca09567ef5fc85f311c446.zip",
+      "declared_size": 6499125373,
+      "reason": "absent"
+    }
+  ]
+}
