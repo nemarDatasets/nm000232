@@ -2,8 +2,8 @@
   "version": "2.0",
   "pipeline_stage": "validated",
   "title": "THINGS-EEG2: A large and rich EEG dataset for modeling human visual object recognition",
-  "description": "THINGS-EEG2 is a large EEG dataset from 10 participants who viewed 16,540 training images and 200 repeatedly presented test images from the THINGS database. Images were shown in rapid serial visual presentation at 5 Hz while 63-channel EEG was recorded at 1000 Hz across four sessions per subject. The dataset supports modeling of human visual object recognition and includes resting-state recordings, the authors' preprocessed epochs, and stimulus images.",
-  "methods_description": "EEG was recorded with a BrainVision actiCHamp system (63 channels, 10-10 layout, 1000 Hz, online band-pass 0.01-100 Hz). Each of four sessions per subject had 5 training runs, 1 test run, and 2 resting-state runs. Stimuli were presented by RSVP at ~200 ms SOA, with random target catch trials requiring a button press.",
+  "description": "THINGS-EEG2 is a large EEG dataset from 10 participants who viewed 16,540 training images and 200 repeated test images from the THINGS database. Images were shown in a rapid serial visual presentation stream at 5 Hz across four sessions per subject. Resting-state recordings are also included. The dataset is intended for modeling human visual object recognition and for building encoding models.",
+  "methods_description": "EEG was recorded with a BrainVision actiCHamp system at 1000 Hz with 63 channels in a 10-10 layout and an online band-pass filter of 0.01-100 Hz. Each of the four sessions per subject had 5 training runs, 1 test run, and 2 resting-state runs. Catch trials required a button press.",
   "license": "CC-BY 4.0",
   "dataset_type": "raw",
   "authors": {
@@ -85,7 +85,7 @@
     "eeg"
   ],
   "sizes": [
-    "198 GB (1504 files)"
+    "242 GB (1554 files)"
   ],
   "formats": [
     ".bdf",
@@ -104,5 +104,5 @@
     ".yml",
     ".zip"
   ],
-  "source_hash": "562a1589334324046776308484a5c086521536e9babd277e77c2b8f818ed3912"
+  "source_hash": "318cbc0473106cc30042bb451fc2fce48ed0120ccc0ed8fc650166c60247361a"
 }
