@@ -1,7 +1,7 @@
 {
     "Name": "THINGS-EEG2: A large and rich EEG dataset for modeling human visual object recognition",
     "BIDSVersion": "1.9.0",
-    "Version": "1.1.0",
+    "Version": "1.1.1",
     "DatasetType": "raw",
     "License": "CC-BY 4.0",
     "Authors": [

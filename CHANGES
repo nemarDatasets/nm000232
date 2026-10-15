@@ -1,3 +1,16 @@
+1.1.1 2026-10-14
+  - CHANGES: added the missing 1.1.0 entry below. No data or other metadata change.
+  - dataset_description.json: Version 1.1.0 -> 1.1.1.
+
+1.1.0 2026-07-05
+  - derivatives/preprocessed_eeg/: content of sub-02.zip to sub-10.zip (only sub-01's content had been uploaded;
+    SHA-256 checked against the existing annex keys; sub-08's pointer updated to the current OSF anp5v file, re-zipped
+    upstream) and the 63-channel variants sub-01__63_channels.zip to sub-10__63_channels.zip, from OSF anp5v
+    (Gifford et al. THINGS-EEG2). Closes nemarDatasets/nm000232#2.
+  - Annexed files (sourcedata/, derivatives/) changed from unlocked pointer files to locked symlinks; the annex keys,
+    and so the content, are unchanged.
+  - dataset_description.json: Version 1.0.1 -> 1.1.0.
+
 1.0.1 2026-04-30
   - Added BEP044-compliant stimuli/ structure (BIDS-spec PR #2022):
       * stimuli/stimuli.tsv (16,740 rows: 16,540 train + 200 test)
